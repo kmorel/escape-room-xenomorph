@@ -39,7 +39,7 @@ FURTHERMORE, THE TERMS OF THIS CONTRACT ARE STANDARD.
 `,
 	` 
 FROM: WEYLAND-YUTANI VP MILTARY APPLICATIONS
-TO: CHEIF SCIENCE OFFICER ASH
+TO: CHEIF SCIENCE OFFICER ASH HOLM
 SUBJECT: SPECIAL ORDER 937
  
 PRIORITY ONE
@@ -65,6 +65,18 @@ SALVAGE APPROVED.
 	terminal.clear();
 	termout(full_text);
     }
+
+    var crew =` 
+   CREW MEMBER      POSITION             STATUS
+   -----------      --------             ------
+1. ARTHUR DALLAS    CAPTAIN              MISSING
+2. GILBERT KANE     EXECUTIVE OFFICER    DECEASED
+3. ELLEN RIPLEY     WARRANT OFFICER      OK
+4. JOAN LAMBERT     NAVIGATOR            OK
+5. ASH HILL         SCIENCE OFFICER      OFFLINE
+6. DENNIS PARKER    CHIEF ENGINEER       OK
+7. SAMUEL BRETT     ENGINEERING TECH     DECEASED
+`;
 
     var terminal = $('body').terminal(function(command) {
 	// var message = '';
@@ -94,6 +106,9 @@ SALVAGE APPROVED.
 		    return false;
 		}
 	    });
+	} else if (command.includes('CREW')) {
+	    terminal.clear();
+	    termout(crew);
 	} else {
 	    termout('Unknown command: \'' + command + '\'')
 	}
