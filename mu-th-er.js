@@ -1,5 +1,6 @@
 $(function() {
     var prompt = 'COMMAND> ';
+    var waitprompt = 'PRESS ANY KEY TO CONTINUE ';
 
     var wy_logo = `
   #####  #####  #####  #####  #####
@@ -78,6 +79,20 @@ SALVAGE APPROVED.
 7. SAMUEL BRETT     ENGINEERING TECH     DECEASED
 `;
 
+    var labnotes = ` 
+LABORATORY NOTES
+CHIEF SCIENCE OFFICER ASH HILL
+2122-06-13
+ 
+THE SPECIMEN'S GESTATION PERIOD IS SHORTER THAN EXPECTED.
+IT HAS EMERGED FROM KANE'S BODY CAVITY.
+THIS WILL COMPLICATE TRANSFERRING THE SPECIMEN TO EARTH.
+ 
+NEVERTHELESS, THIS DOES PROVIDE AN OPPORTUNITY TO OBSERVE
+THE SPECIMEN'S ADULT PHASE.
+THE EVOLVED HUNTING ABILITY IS ADMIRABLE.
+`;
+
     var terminal = $('body').terminal(function(command) {
 	// var message = '';
 	// $.terminal.parse_arguments(command).forEach(function(value, index){
@@ -86,7 +101,7 @@ SALVAGE APPROVED.
 	// termout(message);
 	command = command.toUpperCase();
 	if (command.includes('MESSAGE')) {
-	    terminal.set_prompt('PRESS ANY KEY TO CONTINUE ');
+	    terminal.set_prompt(waitprompt);
 	    var message_index = 0;
 	    print_message(message_index);
 	    terminal.push(function(command) {
@@ -109,6 +124,21 @@ SALVAGE APPROVED.
 	} else if (command.includes('CREW')) {
 	    terminal.clear();
 	    termout(crew);
+	} else if (command.includes('LAB')) {
+	    terminal.set_prompt(waitprompt);
+	    terminal.clear();
+	    termout(labnotes);
+	    terminal.push(function(command) { }, {
+		onExit: function() {
+		    terminal.clear();
+		    terminal.set_prompt(prompt);
+		    termout('LAB NOTES CLOSED\n ');
+		},
+		keydown: function() {
+		    terminal.pop();
+		    return false;
+		}
+	    });
 	} else {
 	    termout('Unknown command: \'' + command + '\'')
 	}
