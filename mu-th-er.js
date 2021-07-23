@@ -1,5 +1,5 @@
 $(function() {
-    var prompt = 'COMMAND> ';
+    var prompt = '> ';
     var waitprompt = 'PRESS ANY KEY TO CONTINUE ';
 
     var wy_logo = `
@@ -93,6 +93,26 @@ THE SPECIMEN'S ADULT PHASE.
 THE EVOLVED HUNTING ABILITY IS ADMIRABLE.
 `;
 
+    var recommended_actions = ` 
+THE FOREIGN ORGANISM IS WRECKING HAVOC ON CRAFT AND CREW.
+RECOMMEND TAKING THE FOLLOWING ACTIONS:
+ 
+1. ISOLATE, CAPTURE, AND NEUTRALIZE ORGANISM.
+2. DO NOT DIE.
+`;
+
+    var jokes = [
+	`WHY DID THE ASTRONAUT BREAK UP WITH HER BOYFRIEND?
+BECAUSE SHE NEEDED SOME SPACE.`,
+	`WHERE SHOULD YOU PARK THE NOSTROMO?\nA PARKING METEOR.`,
+	`WHY DID THE COW GO TO OUTER SPACE?\nTO VISIT THE MILKY WAY.`,
+	`WHY DO ALIENS NOT EAT CLOWNS?\nTHEY TASTE FUNNY.`,
+	`WHY HAVE ALIENS NOT COME TO OUR SOLAR SYSTEM YET?
+THEY READ THE REVIEWS: ONE STAR.`,
+	`YESTERDAY I WAS CHARGED $10,000 DOLLARS FOR SENDING MY CAT INTO SPACE.
+IT WAS A CAT ASTRO FEE.`,
+    ];
+
     var terminal = $('body').terminal(function(command) {
 	// var message = '';
 	// $.terminal.parse_arguments(command).forEach(function(value, index){
@@ -139,8 +159,31 @@ THE EVOLVED HUNTING ABILITY IS ADMIRABLE.
 		    return false;
 		}
 	    });
+	} else if (command.includes('VOICE')) {
+	    terminal.clear();
+	    termout(` 
+MICROPHONE NOT REGISTERING SOUND.
+POSSIBLE HARDWARE FAILURE.
+OR TALK LOUDER.
+`);
+	} else if (command.includes('TEMP')) {
+	    terminal.clear();
+	    termout(`TEMPERATURE CONTROLS OFFLINE.
+`);
+	} else if (command.includes('REBOOT')) {
+	    terminal.clear();
+	    termout(` 
+SAFETY PROTOCOLS DICTATE THAT BEFORE A REBOOT CREW MUST
+BE ACTIVELY MANNING LIFE SUPPORT AND NAVIGATION.
+`);
+	} else if (command.includes('ACTION')) {
+	    terminal.clear();
+	    termout(recommended_actions);
+	} else if (command.includes('JOKE')) {
+	    terminal.clear();
+	    termout(jokes[Math.floor(Math.random() * jokes.length)] + '\n');
 	} else {
-	    termout('Unknown command: \'' + command + '\'')
+	    termout('CANNOT UNDERSTAND: \'' + command + '\'')
 	}
     }, {
 	prompt: prompt
