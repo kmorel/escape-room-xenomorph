@@ -20,7 +20,7 @@ $(function() {
 
     function termout(message) {
 	type_audio.play();
-	terminal.typing('echo', 10, message,
+	terminal.typing('echo', 25, message,
 			function() { type_audio.pause() });
     }
 
